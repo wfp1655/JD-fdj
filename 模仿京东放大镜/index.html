@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        #content {
+            width: 993px;
+            height: 542px;
+            margin: 50px auto;
+            position: relative;
+        }
+
+        #left {
+            position: absolute;
+            left: 0;
+            top: 0;
+
+        }
+
+        #topbox {
+            width: 450px;
+            height: 450px;
+            border: 1px solid #cccccc;
+
+        }
+
+        #mask {
+            width: 304px;
+            height: 304px;
+            background: yellow;
+            opacity: 0.5;
+            position: absolute;
+            border: 1px solid grey;
+            visibility: hidden;
+            cursor: move;
+
+        }
+
+        #topbox img {
+            width: 450px;
+            height: 450px;
+
+        }
+
+        #right {
+            width: 540px;
+            height: 540px;
+            border: 1px solid #cccccc;
+            position: absolute;
+            right: 0;
+            top: 0;
+            visibility: hidden;
+            overflow: hidden;
+
+        }
+
+        #pic {
+            position: absolute;
+            z-index: 1;
+        }
+
+        #bj {
+            position: absolute;
+            z-index: 2;
+            margin-left: 145px;
+            margin-top: 377px;
+            opacity: 0.6;
+
+        }
+
+        #info {
+            height: 70px;
+
+            position: relative;
+        }
+
+        #list {
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            width:724px ;
+
+
+        }
+
+        #wrap{
+            position: absolute;
+            margin-left: 45px;
+            margin-top: 20px;
+            width: 362px;
+            height: 58px;
+
+            overflow: hidden;
+
+
+
+        }
+
+        #list li {
+            width: 54px;
+            height: 54px;
+            float: left;
+            margin-right: 18px;
+            border: 2px solid white;
+        }
+
+        #list .active {
+            border: 2px solid red;
+        }
+
+        #list img {
+            width: 54px;
+            height: 54px;
+        }
+
+        #pre, #next {
+            position: absolute;
+            top: 33px;
+        }
+
+        #pre {
+            left: 0;
+        }
+
+        #next {
+            right: 0;
+        }
+
+    </style>
+
+    <script>
+        window.onload = function () {
+
+            (function () {
+
+                let left = document.querySelector('#topbox');
+                let mask = document.querySelector('#mask');
+                let right = document.querySelector('#right');
+                let pic = document.querySelector('#pic');
+                let topPic = document.querySelector('#topPic');
+                let bj = document.querySelector('#bj');
+                let li = document.querySelectorAll('li');
+
+                let scale = pic.offsetWidth / left.offsetWidth;
+
+
+                left.addEventListener('mouseenter', function () {
+
+                    mask.style.visibility = 'visible'
+                    right.style.visibility = 'visible'
+
+                });
+
+                left.addEventListener('mousemove', function (e) {
+
+
+                    let winL = left.getBoundingClientRect().left;
+                    let winT = left.getBoundingClientRect().top;
+
+                    let x = e.clientX - winL - mask.offsetWidth / 2;
+                    let y = e.clientY - winT - mask.offsetHeight / 2;
+
+                    x = Math.max(0, x);
+                    x = Math.min(left.offsetWidth - mask.offsetWidth, x);
+
+                    y = Math.max(0, y);
+                    y = Math.min(left.offsetHeight - mask.offsetHeight, y);
+
+
+                    mask.style.left = x + 'px';
+                    mask.style.top = y + 'px'
+
+                    pic.style.left = -scale * x + 'px';
+                    pic.style.top = -scale * y + 'px'
+                    bj.style.left = -scale * x + 'px';
+                    bj.style.top = -scale * y + 'px'
+
+
+                });
+
+                left.addEventListener('mouseleave', function () {
+
+                    mask.style.visibility = 'hidden'
+                    right.style.visibility = 'hidden'
+
+                });
+
+
+                for(let i=0;i<li.length;i++){
+                    li[i].index=i+1;
+
+
+                    li[i].addEventListener('mouseover',function () {
+
+                        for(let i=0;i<li.length;i++){
+                            li[i].className=''
+                        }
+                        this.className='active';
+                        topPic.src='img/0'+this.index+'.png'
+                        pic.src='img/0'+this.index+'.png'
+
+
+                    })
+
+
+                }
+
+
+            })();
+
+
+            (function () {
+                let pre = document.querySelector('#pre');
+                let next = document.querySelector('#next');
+
+                let list = document.querySelector('#list');
+
+
+
+                /*下一组*/
+                next.addEventListener('mouseover',function () {
+                    let listLeft=parseInt(getStyle(list,'left'))
+
+                    if(!listLeft){
+                        this.src="img/4.gif"
+                    }
+                })
+
+                next.addEventListener('click',function () {
+                    let listLeft=parseInt(getStyle(list,'left'))
+                    let This=this;
+                    doMove ( list, 'left', 25, -304,function () {
+                        This.src="img/2.gif"
+
+                    })
+
+
+                })
+
+
+                next.addEventListener('mouseout',function () {
+                    this.src="img/2.gif"
+
+                })
+
+                /*上一组*/
+
+
+
+                pre.addEventListener('mouseover',function () {
+                    let listLeft=parseInt(getStyle(list,'left'))
+
+                    if(listLeft){
+                        this.src="img/3.gif"
+                    }
+
+
+
+                })
+
+                pre.addEventListener('click',function () {
+                    let listLeft=parseInt(getStyle(list,'left'))
+                    let This=this;
+                    doMove ( list, 'left', 25, 0,function () {
+                        This.src="img/1.gif"
+
+                    })
+
+
+                })
+
+
+                pre.addEventListener('mouseout',function () {
+                    this.src="img/1.gif"
+
+                })
+
+
+
+
+
+            })()
+
+
+            function doMove ( obj, attr, dir, target, endFn ) {
+
+                dir = parseInt(getStyle( obj, attr )) < target ? dir : -dir;
+
+                clearInterval( obj.timer );
+
+                obj.timer = setInterval(function () {
+
+                    var speed = parseInt(getStyle( obj, attr )) + dir;
+
+                    if ( speed > target && dir > 0 ||  speed < target && dir < 0  ) {
+                        speed = target;
+                    }
+
+                    obj.style[attr] = speed + 'px';
+
+                    if ( speed == target ) {
+                        clearInterval( obj.timer );
+                        endFn && endFn();
+                    }
+
+                }, 30);
+            };
+
+            function getStyle ( obj, attr ) { return obj.currentStyle?obj.currentStyle[attr] : getComputedStyle( obj )[attr]; }
+
+
+
+
+
+        };
+
+
+    </script>
+</head>
+<body>
+<div id="content">
+    <div id="left">
+        <div id="topbox">
+            <div id="mask"></div>
+
+            <img id="topPic" src="img/01.png" alt="">
+
+
+        </div>
+        <div id="info">
+            <a href="javascript:;"><img id="pre"  src="img/1.gif"></a>
+            <a href="javascript:;"><img id="next"  src="img/2.gif"></a>
+
+            <div id="wrap">
+
+                <ul id="list">
+                    <li class="active">
+                        <img src="img/01.png" alt="">
+                    </li>
+                    <li>
+                        <img src="img/02.png" alt="">
+                    </li>
+                    <li>
+                        <img src="img/03.png" alt="">
+                    </li>
+                    <li>
+                        <img src="img/04.png" alt="">
+                    </li>
+                    <li>
+                        <img src="img/05.png" alt="">
+                    </li>
+
+                    <li>
+                        <img src="img/06.png" alt="">
+                    </li>
+                    <li>
+                        <img src="img/07.png" alt="">
+                    </li>
+                    <li>
+                        <img src="img/08.png" alt="">
+                    </li>
+                    <li>
+                        <img src="img/09.png" alt="">
+                    </li>
+
+
+                </ul>
+
+
+            </div>
+
+
+        </div>
+    </div>
+    <div id="right">
+        <img id="bj" src="img/bj.png" alt="">
+        <img id="pic" src="img/01.png" alt="">
+    </div>
+
+</div>
+
+
+</body>
+</html>
