@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0
+    }
+
+    #content {
+        width: 1230px;
+        margin: 50px auto;
+    }
+
+    ul {
+        list-style: none
+    }
+
+    ul li {
+        width: 400px;
+        height: 300px;
+        float: left;
+        padding: 5px
+    }
+
+    ul li img {
+        width: 400px;
+        height: 300px;
+    }
+
+    #bj {
+        width: 100%;
+        height: 100%;
+        background: black;
+        opacity: .8;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: none;
+    }
+
+    #imgbox {
+        position: absolute;
+        width: 100%;
+
+        z-index: 9999;
+
+        text-align: center;
+        display: table;
+
+        left: 0;
+        top: 0;
+        display: none;
+
+    }
+
+    #imgbox img {
+        padding-top: 50px;
+
+
+    }
+
+    #imgbox div {
+        position: relative;
+
+
+    }
+
+    #imgbox .next, #imgbox .prev {
+        display: block;
+        width: 50px;
+        height: 45px;
+        position: absolute;
+        cursor: pointer;
+        z-index: 99999;
+
+    }
+
+    #imgbox .next {
+        right: 10px;
+        top: 450px;
+
+        display: inline-block;
+        background: url("images/next.png");
+
+    }
+
+    #imgbox .prev {
+        left: 10px;
+        top: 450px;
+
+        display: inline-block;
+        background: url("images/prev.png");
+
+    }
+
+    #imgbox span {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        background: white;
+        color: red;
+        background: url("images/close.png");
+        border: 1px solid black;
+        position: absolute;
+        right: 100px;
+        top: 50px;
+
+        cursor: pointer;
+
+    }
+
+</style>
+<body>
+<div id="content">
+    <ul>
+
+
+        <li><img src="images/img_1.jpg"></li>
+        <li><img src="images/img_2.jpg"></li>
+        <li><img src="images/img_3.jpg"></li>
+        <li><img src="images/img_4.jpg"></li>
+        <li><img src="images/img_5.jpg"></li>
+        <li><img src="images/img_6.jpg"></li>
+        <li><img src="images/img_7.jpg"></li>
+        <li><img src="images/img_8.jpg"></li>
+        <li><img src="images/img_9.jpg"></li>
+        <li><img src="images/img_10.jpg"></li>
+        <li><img src="images/img_11.jpg"></li>
+        <li><img src="images/img_12.jpg"></li>
+        <li><img src="images/img_13.jpg"></li>
+        <li><img src="images/img_14.jpg"></li>
+        <li><img src="images/img_15.jpg"></li>
+        <li><img src="images/img_16.jpg"></li>
+        <li><img src="images/img_17.jpg"></li>
+        <li><img src="images/img_18.jpg"></li>
+        <li><img src="images/img_19.jpg"></li>
+        <li><img src="images/img_20.jpg"></li>
+        <li><img src="images/img_21.jpg"></li>
+        <li><img src="images/img_22.jpg"></li>
+        <li><img src="images/img_23.jpg"></li>
+        <li><img src="images/img_24.jpg"></li>
+
+
+    </ul>
+
+</div>
+<div id="imgbox">
+    <div class="picbox">
+        <a href="#jascript:;" class="next"></a>
+        <a href="#jascript:;" class="prev"></a>
+        <div class="pic">
+            <img class="pic2" src="images/img_3.jpg" alt="">
+            <span></span>
+        </div>
+
+
+    </div>
+
+</div>
+<div id="bj"></div>
+
+
+</body>
+
+<script>
+    var bj = document.querySelector('#bj')
+    var imgbox = document.querySelector('#imgbox')
+    var close = document.getElementsByTagName('span')[0];
+    var oimg = document.querySelector('.pic2');
+    var picbox = document.querySelector('.picbox');
+    var aA = document.getElementsByTagName('a');
+    var box = document.querySelector('.picbox');
+    var aLi = document.querySelectorAll('ul li');
+    var ul = document.querySelectorAll('ul');
+    var num = 0;
+    var str = '';
+    var arr = [
+        "images/img_1.jpg",
+        "images/img_2.jpg",
+        "images/img_3.jpg",
+        "images/img_4.jpg",
+        "images/img_5.jpg",
+        "images/img_6.jpg",
+        "images/img_7.jpg",
+        "images/img_8.jpg",
+        "images/img_9.jpg",
+        "images/img_10.jpg",
+        "images/img_11.jpg",
+        "images/img_12.jpg",
+        "images/img_13.jpg",
+        "images/img_14.jpg",
+        "images/img_15.jpg",
+        "images/img_16.jpg",
+        "images/img_17.jpg",
+        "images/img_18.jpg",
+        "images/img_19.jpg",
+        "images/img_20.jpg",
+        "images/img_21.jpg",
+        "images/img_22.jpg",
+        "images/img_23.jpg",
+        "images/img_24.jpg"
+    ];
+
+
+
+
+    for (var i = 0; i < aLi.length; i++) {
+        aLi[i].index = i;
+        aLi[i].onclick = function () {
+
+            oimg.src = arr[this.index];
+            num = this.index;
+            bj.style.display = 'block';
+            imgbox.style.display = 'block';
+            imgbox.style.top = (document.documentElement.scrollTop || document.body.scrollTop *.9) + 'px';
+            oimg.style.height = (document.documentElement.clientHeight*.9) + 'px';
+            // picbox.style.height = document.documentElement.clientHeight + 'px';
+            bj.style.height = document.documentElement.scrollHeight + 'px';
+            aA[0].onclick = function () {
+                num++;
+                if (num > arr.length - 1) {
+                    num = 0
+                }
+                oimg.src = arr[num]
+            }
+
+            aA[1].onclick = function () {
+                num--;
+                if (num < 0) {
+                    num = arr.length - 1
+                }
+                oimg.src = arr[num]
+            }
+        };
+        close.onclick = function () {
+
+            bj.style.display = 'none';
+            imgbox.style.display = 'none';
+            num = 0;
+        }
+    }
+
+
+</script>
+ji
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0
+    }
+
+    #content {
+        width: 1230px;
+        margin: 50px auto;
+    }
+
+    ul {
+        list-style: none
+    }
+
+    ul li {
+        width: 400px;
+        height: 300px;
+        float: left;
+        padding: 5px
+    }
+
+    ul li img {
+        width: 400px;
+        height: 300px;
+    }
+
+    #bj {
+        width: 100%;
+        height: 100%;
+        background: black;
+        opacity: .7;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: none;
+    }
+
+    #imgbox {
+        position: absolute;
+        width: 100%;
+
+        z-index: 9999;
+
+        text-align: center;
+        display: table;
+
+        left: 0;
+        top: 0;
+        display: none;
+
+    }
+
+    #imgbox img {
+        padding-top: 50px;
+        height: 800px;
+
+    }
+
+    #imgbox div {
+        position: relative;
+        height: 900px;
+
+    }
+
+    #imgbox .next, #imgbox .prev {
+        width: 50px;
+        height: 45px;
+        position: absolute;
+
+    }
+
+    #imgbox .next {
+        right: 10px;
+        top: 450px;
+
+        display: inline-block;
+        background: url("images/next.png");
+
+    }
+
+    #imgbox .prev {
+        left: 10px;
+        top: 450px;
+
+        display: inline-block;
+        background: url("images/prev.png");
+
+    }
+
+    #imgbox span {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        background: white;
+        color: red;
+        background: url("images/close.png");
+
+        cursor: pointer;
+
+    }
+
+</style>
+<body>
+<div id="content">
+    <ul>
+        <li>
+
+            <img src="images/img_1.jpg" alt="">
+            </a>
+
+        </li>
+        <li>
+
+            <img src="images/img_2.jpg" alt="">
+            </a>
+        </li>
+        <li>
+
+            <img src="images/img_3.jpg" alt="">
+            </a>
+        </li>
+        <li>
+
+            <img src="images/img_4.jpg" alt="">
+            </a>
+        </li>
+        <li>
+
+            <img src="images/img_5.jpg" alt="">
+            </a>
+        </li>
+        <li>
+
+            <img src="images/img_6.jpg" alt="">
+            </a>
+        </li>
+    </ul>
+
+</div>
+<div id="imgbox">
+    <div class="picbox">
+        <!--<a href="#" class="next"></a>
+        <a href="#" class="prev"></a>-->
+        <!-- <img src="images/img_3.jpg" alt="">
+          <span></span>-->
+
+    </div>
+
+</div>
+<div id="bj"></div>
+
+
+</body>
+
+<script>
+    var bj = document.querySelector('#bj')
+    var imgbox = document.querySelector('#imgbox')
+    var close = document.getElementsByTagName('span')[0];
+    var oimg = document.getElementsByTagName('img')[0];
+    var aA = document.getElementsByTagName('a');
+    var box = document.querySelector('.picbox')
+    var aLi = document.querySelectorAll('ul li');
+    var num = 0
+
+
+    for (var i = 0; i < aLi.length; i++) {
+        aLi[i].index = i;
+        aLi[i].onclick = function () {
+
+
+            box.innerHTML = '<a href="#" class="next" onclick="next()"></a><a href="#" class="prev" onclick="prev()"></a><img src="images/img_' + (this.index + 1) + '.jpg" alt=""><span onclick="closepic()"></span>'
+            bj.style.display = 'block';
+            imgbox.style.display = 'block';
+
+
+        };
+
+
+        function closepic() {
+
+            bj.style.display = 'none';
+            imgbox.style.display = 'none';
+
+        }
+
+        function next() {
+
+
+            num++;
+            oimg.src = "images/img_8.jpg"
+
+
+        }
+
+        function prev() {
+
+            var oimg = document.getElementsByTagName('img')[0];
+            num++;
+
+
+        }
+
+
+    }
+
+
+</script>
+</html>
